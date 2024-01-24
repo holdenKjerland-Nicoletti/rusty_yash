@@ -1,6 +1,5 @@
 use std::{error::Error, fmt, fs::File, process::Command};
 
-
 #[derive(Debug, Clone, PartialEq)]
 enum CommandError {
     Empty,
@@ -143,8 +142,8 @@ mod tests {
 
     #[test]
     fn parse_cmd_test_redirect_stdout() {
-        let stdout_file = Path::new("output.txt");
-        let input = "echo hello > output.txt";
+        let stdout_file = Path::new("output1.txt");
+        let input = "echo stdout_test > output1.txt";
         cmd_handler(&input);
 
         // Read the contents of the file
@@ -152,7 +151,9 @@ mod tests {
         let mut file = fs::File::open(stdout_file).expect("Failed to open file");
         file.read_to_string(&mut file_content).expect("Failed to read file");
         // Assert that the file contains the expected text "hello"
-        assert_eq!(file_content.trim(), "hello");
+        assert_eq!(file_content.trim(), "stdout_test");
+
+        let _ = fs::remove_file("output1.txt");
     }
 
     fn create_input_file(input_file: &Path){
@@ -193,6 +194,9 @@ mod tests {
         file.read_to_string(&mut file_content).expect("Failed to read file");
         // Assert that the file contains the expected text "hello"
         assert_eq!(file_content.trim(), "hello world");
+
+        let _ = fs::remove_file("output.txt");
+        let _ = fs::remove_file("input.txt");
     }
 
     #[test]
