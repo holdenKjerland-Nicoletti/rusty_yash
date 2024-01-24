@@ -15,8 +15,8 @@ fn shell_loop() {
 
         // Read a line from standard input
         match io::stdin().read_line(&mut input) {
+            // Ctrl-D (EOF)
             Ok(0) =>{
-                // Ctrl-D (EOF) was pressed, exit the loop
                 println!("Ctrl-D (EOF) pressed. Exiting.");
                 break;
             }
